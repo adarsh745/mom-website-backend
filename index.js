@@ -16,6 +16,7 @@ const AdminRoutes = require("./routes/Authentication.routes")
 const jobDetails=require("./routes/jobDetailsRoutes")
 const userRoutes=require("./routes/Employeeportal/userRoutes")
 const EmployeeRoutes=require('./routes/Employeeportal/EmployeeRoutes')
+const leaveRoutes = require("./routes/Employeeportal/leave.routes")
 
 
 const port=process.env.PORT || 3001
@@ -66,6 +67,8 @@ app.use('/job',jobDetails)
 //Employeeportal routes
 app.use("/api" , userRoutes)
 app.use("/api" ,EmployeeRoutes)
+//leave routes
+app.use("/api" ,  leaveRoutes)
 
 
 app.listen(port,()=>{
