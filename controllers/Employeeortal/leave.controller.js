@@ -3,6 +3,7 @@ const Leaves = require("../../models/Employeeportal/Leaves.model")
 //create leave 
 async function applyLeave(req , res){
     try{
+        console.log("this is from leave controller" , req.AccessDetails)
         const {leaveType ,reason , from , to , name , employeeId } =  req.body
         if(!name || !from || !to){
             return res.status(404).json({msg:"All fields are required" , status:false})
@@ -19,6 +20,7 @@ async function applyLeave(req , res){
         res.json({msg:"sucessfully applied for leave" , status:true})
 
     }catch(error){
+        console.log(error)
         res.status(500).json({msg:"Internal server error" , status:false , error})
     }
 }
