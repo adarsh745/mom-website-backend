@@ -8,7 +8,7 @@ async function EmployeesDetails(req, res) {
         const employeeUrl = req.file.location
         console.log("this is employee details" , req.body)
         const employeeId=Date.now().toString(32);
-        const {employeeName , employeedesignation , Aboutemployee} = req.body
+        const {employeeName ,employeedesignation,Aboutemployee,linkedin,email} = req.body
         if (!employeeUrl) {
             return res.status(404).json({ msg: "Please provide the img" })
         }
@@ -18,8 +18,14 @@ async function EmployeesDetails(req, res) {
             employeeId,
             employeeUrl,
             Key: req.file.key,
-            employeeName , employeedesignation , Aboutemployee
+            employeeName,
+            employeedesignation,
+            Aboutemployee,
+            linkedin,
+            email
         })
+
+        console.log("linkedin",linkedin)
 
         await employeeimg.save()
         res.status(200).json({ msg: "uploaded successfully", status: true, data: employeeimg })
