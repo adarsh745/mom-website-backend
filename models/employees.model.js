@@ -33,7 +33,6 @@ employeeId: {
   {
     type:String,
     required:true
-
   }
 
 }, { timestamps: true });

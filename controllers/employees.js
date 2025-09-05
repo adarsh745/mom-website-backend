@@ -24,7 +24,6 @@ async function EmployeesDetails(req, res) {
             linkedin,
             email
         })
-
         console.log("linkedin",linkedin)
 
         await employeeimg.save()
