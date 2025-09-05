@@ -51,8 +51,10 @@ async function approveLeave(req ,res){
      try{
         console.log("this is from env for mail",adminEmail);     
         const {id} = req.params
+
         const {email,from,to,name}=req.body
         console.log("this is email from the req.body",email);      
+
         const approvedLeave = await Leaves.findOneAndUpdate({_id:id} , {status:"Approved"} , {new:true})
         if(!email){
            res.json({data:approvedLeave,status:true})
@@ -110,9 +112,15 @@ async function cancelLeave(req ,res){
 
 async function getLeavesbyUserId(req , res){
     try{
+        // const {skip , limit} =  req.query
+        // console.log("skip pages",skip , limit)
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 6;
+        const skip = (page - 1) * limit;
+        
         const {userId} = req.AccessDetails
         console.log("this is from leaves by user" , req.AccessDetails)
-        const userLeaves = await Leaves.find({employeeId:userId})
+        const userLeaves = await Leaves.find({employeeId:userId}).sort({AppliedAt:-1}).skip(skip).limit(limit)
         res.json({leaves:userLeaves})
     }catch(error){
         res.status(500).json({msg:"Internal server error" , status:false , error})
