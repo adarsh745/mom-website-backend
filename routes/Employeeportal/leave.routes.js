@@ -1,10 +1,12 @@
 const express = require("express")
-const { applyLeave, getAllLeaves, approveLeave } = require("../../controllers/Employeeortal/leave.controller")
+const { applyLeave, getAllLeaves, approveLeave, getLeavesbyUserId } = require("../../controllers/Employeeortal/leave.controller")
 const verifyEmployee = require("../../middlewares/VerifyEmployee")
 const router = express()
 
 //get all leaves for admin
 router.get("/leaves" ,  getAllLeaves)
+
+router.get('/leavebyuser' ,verifyEmployee , getLeavesbyUserId )
 
 //apply leave by user 
 router.post("/leave/apply" , verifyEmployee, applyLeave)

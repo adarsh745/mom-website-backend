@@ -55,4 +55,15 @@ async function cancelLeave(req ,res){
     }
 }
 
-module.exports = {applyLeave , getAllLeaves ,approveLeave, cancelLeave}
+async function getLeavesbyUserId(req , res){
+    try{
+        const {userId} = req.AccessDetails
+        console.log("this is from leaves by user" , req.AccessDetails)
+        const userLeaves = await Leaves.find({employeeId:userId})
+        res.json({leaves:userLeaves})
+    }catch(error){
+        res.status(500).json({msg:"Internal server error" , status:false , error})
+    }
+}
+
+module.exports = {applyLeave , getAllLeaves ,approveLeave, cancelLeave , getLeavesbyUserId}
