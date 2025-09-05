@@ -33,6 +33,9 @@ const leaveSchema = new mongoose.Schema({
     AppliedAt:{
         type:Date , 
         default:Date.now()
+    },
+    email:{
+        type:String
     }
 
 })

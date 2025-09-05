@@ -21,7 +21,7 @@ const LoginUser = async (req, res) => {
       throw new Error("All Fields are mandatory");
     }
     const userDetails = await User.findOne({ username });
-
+    console.log("this is the user details",userDetails)
     if (!userDetails) {
       return res.status(404).json({ msg: "User not found", status: true });
     }
@@ -33,6 +33,7 @@ const LoginUser = async (req, res) => {
             userId: userDetails._id,
             username: userDetails.username,
             isAdmin: userDetails.isAdmin,
+            email:userDetails.email
           },
           process.env.SECRET_KEY,
           (err, token) => {
