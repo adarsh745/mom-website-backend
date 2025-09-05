@@ -38,6 +38,7 @@ async function getAllLeaves(req, res){
 async function approveLeave(req ,res){
     try{
         const {id} = req.params
+        
         const approvedLeave = await Leaves.findOneAndUpdate({_id:id} , {status:"Approved"} , {new:true})
          res.json({data:approvedLeave, status:true})
     }catch(error){
@@ -57,9 +58,15 @@ async function cancelLeave(req ,res){
 
 async function getLeavesbyUserId(req , res){
     try{
+        // const {skip , limit} =  req.query
+        // console.log("skip pages",skip , limit)
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 6;
+        const skip = (page - 1) * limit;
+        
         const {userId} = req.AccessDetails
         console.log("this is from leaves by user" , req.AccessDetails)
-        const userLeaves = await Leaves.find({employeeId:userId})
+        const userLeaves = await Leaves.find({employeeId:userId}).sort({AppliedAt:-1}).skip(skip).limit(limit)
         res.json({leaves:userLeaves})
     }catch(error){
         res.status(500).json({msg:"Internal server error" , status:false , error})
